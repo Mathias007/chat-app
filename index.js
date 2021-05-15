@@ -1,8 +1,49 @@
-import { registerRootComponent } from 'expo';
+import React from "react";
 
-import App from './App';
+import { registerRootComponent } from "expo";
+import { API_URL, API_TOKEN } from "@env";
+
+import App from "./App";
+
+import {
+    ApolloClient,
+    InMemoryCache,
+    gql,
+    ApolloProvider,
+} from "@apollo/client";
+
+const client = new ApolloClient({
+    uri: API_URL,
+    cache: new InMemoryCache(),
+    headers: {
+        authorization: `Bearer ${API_TOKEN}`,
+    },
+});
+
+client
+    .query({
+        query: gql`
+            {
+                user {
+                    firstName
+                    lastName
+                    email
+                    id
+                    role
+                    profilePic
+                }
+            }
+        `,
+    })
+    .then((result) => console.log(result));
+
+const RootComponent = () => (
+    <ApolloProvider client={client}>
+        <App />
+    </ApolloProvider>
+);
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in the Expo client or in a native build,
 // the environment is set up appropriately
-registerRootComponent(App);
+registerRootComponent(RootComponent);
