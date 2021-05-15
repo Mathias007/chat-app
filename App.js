@@ -1,53 +1,55 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
 
-import { gql, useQuery } from "@apollo/client";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-const GET_USER_DATA = gql`
-    {
-        user {
-            firstName
-            lastName
-            email
-            id
-            role
-            profilePic
-        }
-    }
-`;
+import ChatRoomScreen from "./screens/ChatRoomScreen";
+import HomeScreen from "./screens/HomeScreen";
+import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import RoomsListScreen from "./screens/RoomsListScreen";
+import UserProfileScreen from "./screens/UserProfileScreen";
+
+const Stack = createStackNavigator();
+const { Navigator, Screen } = Stack;
+
 export default function App() {
-    const { loading, error, data } = useQuery(GET_USER_DATA);
-
-    if (loading) return <Text>Loading...</Text>;
-    if (error) return <Text>`Error! ${error.message}`</Text>;
-
-    const { email, firstName, lastName, profilePic, role } = data.user;
-
     return (
-        <View style={styles.container}>
-            <Text>
-                {firstName}
-                {lastName}
-            </Text>
-            <Text style={{ color: "red", fontSize: 18 }}>{email}</Text>
-            <Text>
-                <Image
-                    source={{ uri: profilePic }}
-                    style={{ width: 400, height: 400 }}
+        <NavigationContainer>
+            <Navigator initialRouteName="Home">
+                <Screen
+                    name="Home"
+                    component={HomeScreen}
+                    options={{ title: "Home" }}
                 />
-            </Text>
-            <Text>{role}</Text>
+                <Screen
+                    name="Login"
+                    component={LoginScreen}
+                    options={{ title: "Login" }}
+                />
+                <Screen
+                    name="Register"
+                    component={RegisterScreen}
+                    options={{ title: "Register" }}
+                />
+                <Screen
+                    name="Rooms"
+                    component={RoomsListScreen}
+                    options={{ title: "Rooms" }}
+                />
+                <Screen
+                    name="Chat"
+                    component={ChatRoomScreen}
+                    options={{ title: "Overview" }}
+                />
+                <Screen
+                    name="Profile"
+                    component={UserProfileScreen}
+                    options={{ title: "Profile" }}
+                />
+            </Navigator>
             <StatusBar style="auto" />
-        </View>
+        </NavigationContainer>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-});
