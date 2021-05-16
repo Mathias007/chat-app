@@ -5,6 +5,8 @@ import { View, Text, StyleSheet } from "react-native";
 import { Header, Avatar, Image } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
+import RoomCard from "./components/RoomsList/RoomCard";
+
 import {
     useFonts,
     Poppins_400Regular,
@@ -13,7 +15,26 @@ import {
     Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 
+import { gql, useQuery } from "@apollo/client";
+
+const GET_ROOMS_DATA = gql`
+    {
+        usersRooms {
+            rooms {
+                id
+                name
+                roomPic
+            }
+        }
+    }
+`;
+
+const searchIcon = require("../assets/search.svg");
+const rommsIcon = require("../assets/rooms.svg");
+
 export default function RoomsListScreen({ navigation }) {
+    const { loading, error, data } = useQuery(GET_ROOMS_DATA);
+
     let [fontsLoadeed] = useFonts({
         Poppins_400Regular,
         Poppins_500Medium,
@@ -21,9 +42,13 @@ export default function RoomsListScreen({ navigation }) {
         Poppins_700Bold,
     });
 
-    if (!fontsLoadeed) {
+    if (!fontsLoadeed || loading) {
         return <AppLoading />;
     }
+
+    if (error) return <Text>Error! ${error.message}</Text>;
+
+    const { rooms } = data.usersRooms;
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -34,55 +59,25 @@ export default function RoomsListScreen({ navigation }) {
                 containerStyle={styles.headerContainer}
                 rightComponent={
                     <View style={styles.options}>
-                        <Image
-                            source={{ uri: "../assets/search.svg" }}
-                            style={styles.optionIcon}
-                        />
-                        <Image
-                            source={{ uri: "../assets/rooms.svg" }}
-                            style={styles.optionIcon}
-                        />
+                        <Image source={searchIcon} style={styles.optionIcon} />
+                        <Image source={rommsIcon} style={styles.optionIcon} />
                     </View>
                 }
                 rightContainerStyle={styles.options}
             />
             <View style={styles.roomsList}>
-                <View style={styles.activeRoom}>
-                    <Avatar
-                        rounded
-                        source={{
-                            uri:
-                                "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
-                        }}
-                        style={styles.roomAvatar}
-                    />
-                    <View style={styles.roomData}>
-                        <Text style={styles.roomName}>The one with Harry</Text>
-                        <Text style={styles.roomMessage}>
-                            Hey Harry, how you doing?
-                        </Text>
-                    </View>
-                    <Text style={styles.roomMeta}>24m ago</Text>
-                </View>
+                {rooms.map((room) => {
+                    const { id, name, roomPic } = room;
 
-                <View style={styles.room}>
-                    <Avatar
-                        rounded
-                        // source={{
-                        //     uri:
-                        //         "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
-                        // }}
-                        icon={{ name: "home" }}
-                        style={styles.roomAvatar}
-                    />
-                    <Text style={styles.roomData}>
-                        <Text style={styles.roomName}>The one with Harry</Text>
-                        <Text style={styles.roomMessage}>
-                            Hey Harry, how you doing?
-                        </Text>
-                    </Text>
-                    <Text style={styles.roomMeta}>24m ago</Text>
-                </View>
+                    return (
+                        <RoomCard
+                            id={id}
+                            name={name}
+                            roomPic={roomPic}
+                            navigation={navigation}
+                        />
+                    );
+                })}
             </View>
         </ScrollView>
     );
