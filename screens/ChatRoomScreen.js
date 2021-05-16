@@ -1,39 +1,74 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Platform } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import emojiUtils from "emoji-utils";
 
+import { gql, useMutation } from "@apollo/client";
+
 import Message from "./components/ChatRoom/Message";
 
-export default class ChatRoomScreen extends React.Component {
-    state = {
-        messages: [],
-    };
+const POST_NEW_MESSAGE = gql`
+    mutation Message($body: String!, $roomId: String!) {
+        sendMessage(body: $body, roomId: $roomId) {
+            body
+            id
+            insertedAt
+            user {
+                id
+                firstName
+            }
+        }
+    }
+`;
 
-    componentDidMount() {
-        this.setState({
-            messages: [
-                {
-                    _id: 1,
-                    text: "Hello developer!!!",
-                    createdAt: new Date(),
+export default function ChatRoomScreen({ navigation, route }) {
+    const [messages, setMessages] = useState([]);
+    const [roomID, setRoomID] = useState("");
+
+    useEffect(() => {
+        setRoomID(route.params.chatData.room.id);
+        setMessages(
+            route.params.chatData.room.messages.map((message) => {
+                const { id, body, insertedAt, user } = message;
+
+                return {
+                    _id: id,
+                    text: body,
+                    createdAt: insertedAt,
                     user: {
-                        _id: 2,
-                        name: "React Native",
-                        avatar: "https://placeimg.com/140/140/any",
+                        _id: user.id,
+                        name: user.firstName,
+                        avatar: user.profilePic,
                     },
+                };
+            })
+        );
+    }, []);
+
+    const [sendMessage, { data }] = useMutation(POST_NEW_MESSAGE);
+
+    function onSend(newMessages = []) {
+        setMessages(GiftedChat.append(messages, newMessages));
+
+        newMessages.forEach((message) => {
+            const { _id, text, createdAt, user } = message;
+
+            console.log(message);
+            console.log(roomID);
+
+            sendMessage({
+                variables: {
+                    roomId: roomID,
+                    body: text,
+                    id: _id,
+                    insertedAt: createdAt,
+                    user,
                 },
-            ],
+            });
         });
     }
 
-    onSend(messages = []) {
-        this.setState((previousState) => ({
-            messages: GiftedChat.append(previousState.messages, messages),
-        }));
-    }
-
-    renderMessage(props) {
+    function renderMessage(props) {
         const {
             currentMessage: { text: currText },
         } = props;
@@ -52,16 +87,14 @@ export default class ChatRoomScreen extends React.Component {
         return <Message {...props} messageTextStyle={messageTextStyle} />;
     }
 
-    render() {
-        return (
-            <GiftedChat
-                messages={this.state.messages}
-                onSend={(messages) => this.onSend(messages)}
-                user={{
-                    _id: 1,
-                }}
-                renderMessage={this.renderMessage}
-            />
-        );
-    }
+    return (
+        <GiftedChat
+            messages={messages}
+            onSend={(messages) => onSend(messages)}
+            user={{
+                _id: 1,
+            }}
+            renderMessage={renderMessage}
+        />
+    );
 }
