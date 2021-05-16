@@ -5,7 +5,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import ChatRoomScreen from "./screens/ChatRoomScreen";
-import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import RoomsListScreen from "./screens/RoomsListScreen";
@@ -17,12 +16,7 @@ const { Navigator, Screen } = Stack;
 export default function App() {
     return (
         <NavigationContainer>
-            <Navigator initialRouteName="Home">
-                <Screen
-                    name="Home"
-                    component={HomeScreen}
-                    options={{ title: "Home" }}
-                />
+            <Navigator initialRouteName="Profile">
                 <Screen
                     name="Login"
                     component={LoginScreen}
@@ -41,7 +35,7 @@ export default function App() {
                 <Screen
                     name="Chat"
                     component={ChatRoomScreen}
-                    options={{ title: "Overview" }}
+                    options={{ title: "Chat" }}
                 />
                 <Screen
                     name="Profile"
