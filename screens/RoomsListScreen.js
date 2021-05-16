@@ -2,7 +2,7 @@ import React from "react";
 import AppLoading from "expo-app-loading";
 
 import { View, Text, StyleSheet } from "react-native";
-import { Header, Avatar, Image } from "react-native-elements";
+import { Header, Image } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
 import RoomCard from "./components/RoomsList/RoomCard";
@@ -30,7 +30,7 @@ const GET_ROOMS_DATA = gql`
 `;
 
 const searchIcon = require("../assets/search.svg");
-const rommsIcon = require("../assets/rooms.svg");
+const roomsIcon = require("../assets/rooms.svg");
 
 export default function RoomsListScreen({ navigation }) {
     const { loading, error, data } = useQuery(GET_ROOMS_DATA);
@@ -60,7 +60,7 @@ export default function RoomsListScreen({ navigation }) {
                 rightComponent={
                     <View style={styles.options}>
                         <Image source={searchIcon} style={styles.optionIcon} />
-                        <Image source={rommsIcon} style={styles.optionIcon} />
+                        <Image source={roomsIcon} style={styles.optionIcon} />
                     </View>
                 }
                 rightContainerStyle={styles.options}

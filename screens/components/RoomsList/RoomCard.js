@@ -17,7 +17,8 @@ import { gql, useQuery } from "@apollo/client";
 const GET_SINGLE_ROOM_DATA = gql`
     query RoomType($id: String!) {
         room(id: $id) {
-            id,
+            id
+            roomPic
             name
             messages {
                 id

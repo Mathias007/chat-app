@@ -22,14 +22,14 @@ export default function RegisterScreen({ navigation }) {
     const [password, onChangePassword] = useState(null);
     const [passwordConfirm, onChangePasswordConfirm] = useState(null);
 
-    let [fontsLoadeed] = useFonts({
+    let [fontsLoaded] = useFonts({
         Poppins_400Regular,
         Poppins_500Medium,
         Poppins_600SemiBold,
         Poppins_700Bold,
     });
 
-    if (!fontsLoadeed) {
+    if (!fontsLoaded) {
         return <AppLoading />;
     }
 

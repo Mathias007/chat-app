@@ -50,11 +50,7 @@ export default class Message extends React.Component {
             <Avatar
                 {...avatarProps}
                 imageStyle={{
-                    left: [
-                        styles.slackAvatar,
-                        avatarProps.imageStyle,
-                        extraStyle,
-                    ],
+                    left: [styles.avatar, avatarProps.imageStyle, extraStyle],
                 }}
             />
         );
@@ -94,7 +90,7 @@ const styles = StyleSheet.create({
         marginLeft: 8,
         marginRight: 0,
     },
-    slackAvatar: {
+    avatar: {
         height: 40,
         width: 40,
         borderRadius: 3,
