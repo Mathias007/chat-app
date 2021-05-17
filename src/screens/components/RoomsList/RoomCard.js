@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import AppLoading from "expo-app-loading";
 
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 import RoomImage from "./RoomImage";
 import RoomData from "./RoomData";
 import RoomMeta from "./RoomMeta";
+import Error from "../Error";
 
 import { useQuery } from "@apollo/client";
 import { GET_SINGLE_ROOM_DATA } from "../../../graphql/roomData.query";
@@ -26,7 +27,7 @@ export default function RoomCard({ id, name, roomPic, navigation }) {
         return <AppLoading />;
     }
 
-    if (error) return <Text>Error! {error.message}</Text>;
+    if (error) return <Error error={error.message}></Error>;
 
     const { body, insertedAt } = data.room.messages[
         data.room.messages.length - 1

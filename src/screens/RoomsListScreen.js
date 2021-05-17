@@ -6,6 +6,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import ScreenHeader from "./components/Header/ScreenHeader";
 import RoomCard from "./components/RoomsList/RoomCard";
+import Error from "./components/Error";
 
 import { useQuery } from "@apollo/client";
 
@@ -21,7 +22,7 @@ export default function RoomsListScreen({ navigation }) {
         return <AppLoading />;
     }
 
-    if (error) return <Text>Error! ${error.message}</Text>;
+    if (error) return <Error error={error.message}></Error>;
 
     const { rooms } = data.usersRooms;
 
