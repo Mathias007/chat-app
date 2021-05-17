@@ -4,11 +4,11 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import ChatRoomScreen from "./screens/ChatRoomScreen";
-import LoginScreen from "./screens/LoginScreen";
-import RegisterScreen from "./screens/RegisterScreen";
-import RoomsListScreen from "./screens/RoomsListScreen";
-import UserProfileScreen from "./screens/UserProfileScreen";
+import ChatRoomScreen from "./src/screens/ChatRoomScreen";
+import LoginScreen from "./src/screens/LoginScreen";
+import RegisterScreen from "./src/screens/RegisterScreen";
+import RoomsListScreen from "./src/screens/RoomsListScreen";
+import UserProfileScreen from "./src/screens/UserProfileScreen";
 
 const Stack = createStackNavigator();
 const { Navigator, Screen } = Stack;
@@ -16,7 +16,7 @@ const { Navigator, Screen } = Stack;
 export default function App() {
     return (
         <NavigationContainer>
-            <Navigator initialRouteName="Profile">
+            <Navigator initialRouteName="Rooms">
                 <Screen
                     name="Login"
                     component={LoginScreen}
