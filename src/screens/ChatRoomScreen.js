@@ -11,9 +11,6 @@ import Message from "./components/ChatRoom/Message";
 
 import { POST_NEW_MESSAGE } from "../graphql/sendMessage.mutation";
 
-const videoIcon = "../assets/videocall.svg";
-const phoneIcon = "../assets/phone.svg";
-
 export default function ChatRoomScreen({ navigation, route }) {
     const [messages, setMessages] = useState([]);
     const [roomID, setRoomID] = useState("");
@@ -77,14 +74,16 @@ export default function ChatRoomScreen({ navigation, route }) {
         return <Message {...props} messageTextStyle={messageTextStyle} />;
     }
 
+    const { name, roomPic } = route.params.chatData.room;
+
     return (
         <>
             <ScreenHeader
-                title={route.params.chatData.room.name}
+                title={name}
                 subtitle="Active now"
-                leftIcon={{ uri: route.params.chatData.room.roomPic }}
-                firstIcon={{ uri: phoneIcon }}
-                secondIcon={{ uri: videoIcon }}
+                leftHeadingIcon={{ uri: roomPic }}
+                firstSettingsIcon="phone"
+                secondSettingsIcon="video"
             />
             <GiftedChat
                 messages={messages}

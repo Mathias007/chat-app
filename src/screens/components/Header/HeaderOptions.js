@@ -1,14 +1,25 @@
 import React from "react";
 import { View, Image, StyleSheet } from "react-native";
+import VectorIcon from "../VectorIcon";
 
 export default function HeaderOptions({ firstIcon, secondIcon }) {
     return (
         <View style={styles.options}>
             {firstIcon ? (
-                <Image source={firstIcon} style={styles.optionIcon} />
+                <VectorIcon
+                    iconType={firstIcon}
+                    iconWidth={44}
+                    iconHeight={44}
+                    iconStyle={styles.optionIcon}
+                />
             ) : null}
             {secondIcon ? (
-                <Image source={secondIcon} style={styles.optionIcon} />
+                <VectorIcon
+                    iconType={secondIcon}
+                    iconWidth={44}
+                    iconHeight={44}
+                    iconStyle={styles.optionIcon}
+                />
             ) : null}
         </View>
     );
@@ -19,14 +30,14 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-around",
-        flex: 1.5,
+        justifyContent: "space-between",
+        flex: 1,
     },
 
     optionIcon: {
         width: 44,
         height: 44,
-        margin: 5,
+        marginHorizontal: 5,
         borderRadius: 50,
         backgroundColor: "#fff",
     },

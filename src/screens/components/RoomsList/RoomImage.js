@@ -1,12 +1,19 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
+import VectorIcon from "../VectorIcon";
 
 export default function RoomImage({ imagePath }) {
-    const imageSource = {
-        uri: imagePath ? imagePath : "../../../assets/rooms.svg",
-    };
-
-    return <Image source={imageSource} style={styles.roomAvatar} />;
+    if (imagePath)
+        return <Image source={{ uri: imagePath }} style={styles.roomAvatar} />;
+    else
+        return (
+            <VectorIcon
+                iconType="rooms"
+                iconWidth={44}
+                iconHeight={44}
+                iconStyle={styles.roomAvatar}
+            />
+        );
 }
 
 const styles = StyleSheet.create({

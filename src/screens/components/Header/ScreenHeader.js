@@ -7,11 +7,11 @@ import HeaderTitle from "./HeaderTitle";
 import HeaderOptions from "./HeaderOptions";
 
 export default function ScreenHeader({
+    leftHeadingIcon,
     title,
     subtitle,
-    firstIcon,
-    secondIcon,
-    leftIcon,
+    firstSettingsIcon,
+    secondSettingsIcon,
 }) {
     return (
         <Header
@@ -19,10 +19,15 @@ export default function ScreenHeader({
             statusBarProps={{ barStyle: "light-content" }}
             placement="left"
         >
-            {leftIcon ? <HeaderIcon iconSource={leftIcon} /> : null}
+            {leftHeadingIcon ? (
+                <HeaderIcon iconSource={leftHeadingIcon} />
+            ) : null}
             <HeaderTitle title={title} subtitle={subtitle} />
-            {firstIcon || secondIcon ? (
-                <HeaderOptions firstIcon={firstIcon} secondIcon={secondIcon} />
+            {firstSettingsIcon || secondSettingsIcon ? (
+                <HeaderOptions
+                    firstIcon={firstSettingsIcon}
+                    secondIcon={secondSettingsIcon}
+                />
             ) : null}
         </Header>
     );
