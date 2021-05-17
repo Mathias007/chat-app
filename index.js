@@ -5,12 +5,7 @@ import { API_URL, API_TOKEN } from "@env";
 
 import App from "./App";
 
-import {
-    ApolloClient,
-    InMemoryCache,
-    gql,
-    ApolloProvider,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const client = new ApolloClient({
     uri: API_URL,
@@ -19,23 +14,6 @@ const client = new ApolloClient({
         authorization: `Bearer ${API_TOKEN}`,
     },
 });
-
-client
-    .query({
-        query: gql`
-            {
-                user {
-                    firstName
-                    lastName
-                    email
-                    id
-                    role
-                    profilePic
-                }
-            }
-        `,
-    })
-    .then((result) => console.log(result));
 
 const RootComponent = () => (
     <ApolloProvider client={client}>

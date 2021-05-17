@@ -8,7 +8,6 @@ import ChatRoomScreen from "./src/screens/ChatRoomScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
 import RoomsListScreen from "./src/screens/RoomsListScreen";
-import UserProfileScreen from "./src/screens/UserProfileScreen";
 
 const Stack = createStackNavigator();
 const { Navigator, Screen } = Stack;
@@ -36,11 +35,6 @@ export default function App() {
                     name="Chat"
                     component={ChatRoomScreen}
                     options={{ title: "Chat" }}
-                />
-                <Screen
-                    name="Profile"
-                    component={UserProfileScreen}
-                    options={{ title: "Profile" }}
                 />
             </Navigator>
             <StatusBar style="auto" />
