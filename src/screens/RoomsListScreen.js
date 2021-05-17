@@ -19,7 +19,7 @@ export default function RoomsListScreen({ navigation }) {
         return <AppLoading />;
     }
 
-    if (error) return <Error error={error.message}></Error>;
+    if (error) return <Error error={error.message} />;
 
     const { rooms } = data.usersRooms;
 

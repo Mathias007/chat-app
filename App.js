@@ -15,7 +15,7 @@ const { Navigator, Screen } = Stack;
 export default function App() {
     return (
         <NavigationContainer>
-            <Navigator initialRouteName="Rooms">
+            <Navigator initialRouteName="Login">
                 <Screen
                     name="Login"
                     component={LoginScreen}

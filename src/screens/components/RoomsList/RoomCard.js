@@ -20,14 +20,14 @@ export default function RoomCard({ id, name, roomPic, navigation }) {
 
     const handleRoomPressing = () => {
         setActive(!isRoomActive);
-        setTimeout(() => navigation.navigate("Chat", { chatData: data }), 500);
+        setTimeout(() => navigation.navigate("Chat", { chatData: data }), 200);
     };
 
     if (loading) {
         return <AppLoading />;
     }
 
-    if (error) return <Error error={error.message}></Error>;
+    if (error) return <Error error={error.message} />;
 
     const { body, insertedAt } = data.room.messages[
         data.room.messages.length - 1
