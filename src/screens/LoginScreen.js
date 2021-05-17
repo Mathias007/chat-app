@@ -26,6 +26,11 @@ export default function LoginScreen({ navigation }) {
         Poppins_700Bold,
     });
 
+    const handleFormSubmit = () => {
+        if (email === null && password === null)
+            navigation.navigate("Rooms");
+    };
+
     if (!fontsLoadeed) {
         return <AppLoading />;
     }
@@ -66,7 +71,7 @@ export default function LoginScreen({ navigation }) {
 
                 <Button
                     title="Log in"
-                    onPress={() => navigation.navigate("Rooms")}
+                    onPress={handleFormSubmit}
                     buttonStyle={styles.button}
                 />
             </View>

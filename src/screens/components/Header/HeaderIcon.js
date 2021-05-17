@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     headerIcon: {
         width: 44,
         height: 44,
+        marginTop: 8,
         borderRadius: 50,
         backgroundColor: "#fff",
     },
