@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     optionIcon: {
         width: 44,
         height: 44,
+        margin: 5,
         borderRadius: 50,
         backgroundColor: "#fff",
     },

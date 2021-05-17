@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         backgroundColor: "#B6DEFD",
         justifyContent: "space-between",
+        alignItems: "center",
         borderBottomLeftRadius: 24,
         borderBottomRightRadius: 24,
     },

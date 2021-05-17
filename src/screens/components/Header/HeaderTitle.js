@@ -1,4 +1,5 @@
 import React from "react";
+import AppLoading from "expo-app-loading";
 
 import { Text, StyleSheet } from "react-native";
 
@@ -13,6 +14,10 @@ export default function HeaderTitle({ title, subtitle }) {
         Poppins_400Regular,
         Poppins_700Bold,
     });
+
+    if (!fontsLoadeed) {
+        return <AppLoading />;
+    }
 
     return (
         <>
