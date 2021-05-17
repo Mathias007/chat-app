@@ -1,3 +1,5 @@
+import { gql } from "@apollo/client";
+
 export const POST_NEW_MESSAGE = gql`
     mutation Message($body: String!, $roomId: String!) {
         sendMessage(body: $body, roomId: $roomId) {
