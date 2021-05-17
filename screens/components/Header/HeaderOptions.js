@@ -1,11 +1,15 @@
 import React from "react";
-import { View, Image } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 
 export default function HeaderOptions({ firstIcon, secondIcon }) {
     return (
         <View style={styles.options}>
-            <Image source={firstIcon} style={styles.optionIcon} />
-            <Image source={secondIcon} style={styles.optionIcon} />
+            {firstIcon ? (
+                <Image source={firstIcon} style={styles.optionIcon} />
+            ) : null}
+            {secondIcon ? (
+                <Image source={secondIcon} style={styles.optionIcon} />
+            ) : null}
         </View>
     );
 }

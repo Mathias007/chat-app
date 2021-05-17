@@ -1,4 +1,5 @@
 import React from "react";
+import { StyleSheet } from "react-native";
 import { Header } from "react-native-elements";
 
 import HeaderIcon from "./HeaderIcon";
@@ -20,7 +21,9 @@ export default function ScreenHeader({
         >
             {leftIcon ? <HeaderIcon iconSource={leftIcon} /> : null}
             <HeaderTitle title={title} subtitle={subtitle} />
-            <HeaderOptions firstIcon={firstIcon} secondIcon={secondIcon} />
+            {firstIcon || secondIcon ? (
+                <HeaderOptions firstIcon={firstIcon} secondIcon={secondIcon} />
+            ) : null}
         </Header>
     );
 }
