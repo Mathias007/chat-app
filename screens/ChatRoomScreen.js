@@ -117,17 +117,17 @@ export default function ChatRoomScreen({ navigation, route }) {
                 placement="left"
                 leftComponent={
                     <Image
-                        source={route.params.chatData.room.roomPic}
+                        source={{ uri: route.params.chatData.room.roomPic }}
                         style={styles.optionIcon}
                     />
                 }
                 leftContainerStyle={styles.optionIcon}
                 centerComponent={
                     <View>
-                        <Text styles={styles.headerTitle}>
+                        <Text style={styles.headerTitle}>
                             {route.params.chatData.room.name}
                         </Text>
-                        <Text styles={styles.headerSubtitle}>Active now</Text>
+                        <Text style={styles.headerSubtitle}>Active now</Text>
                     </View>
                 }
                 containerStyle={styles.headerContainer}
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
         backgroundColor: "#B6DEFD",
-        justifyContent: "space-between",
+        justifyContent: "center",
         borderBottomLeftRadius: 24,
         borderBottomRightRadius: 24,
     },
