@@ -1,5 +1,6 @@
 import React from "react";
 import AppLoading from "expo-app-loading";
+import TimeAgo from "react-native-timeago";
 
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
@@ -12,7 +13,6 @@ import {
 } from "@expo-google-fonts/poppins";
 
 import { useQuery } from "@apollo/client";
-
 import { GET_SINGLE_ROOM_DATA } from "../../../graphql/roomData.query";
 
 export default function RoomCard({ id, name, roomPic, navigation }, {}) {
@@ -54,7 +54,9 @@ export default function RoomCard({ id, name, roomPic, navigation }, {}) {
                     30
                 )} ...`}</Text>
             </View>
-            <Text style={styles.roomMeta}>{insertedAt}</Text>
+            <Text style={styles.roomMeta}>
+                <TimeAgo time={insertedAt} />
+            </Text>
         </TouchableOpacity>
     );
 }
