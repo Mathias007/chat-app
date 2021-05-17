@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 
-import { Avatar, Day, utils } from "react-native-gifted-chat";
+import { Day, utils } from "react-native-gifted-chat";
 import Bubble from "./Bubble";
 
 const { isSameUser, isSameDay } = utils;
@@ -36,26 +36,6 @@ export default class Message extends React.Component {
         return <Bubble {...bubbleProps} />;
     }
 
-    renderAvatar() {
-        let extraStyle;
-        if (
-            isSameUser(this.props.currentMessage, this.props.previousMessage) &&
-            isSameDay(this.props.currentMessage, this.props.previousMessage)
-        ) {
-            extraStyle = { height: 0 };
-        }
-
-        const avatarProps = this.getInnerComponentProps();
-        return (
-            <Avatar
-                {...avatarProps}
-                imageStyle={{
-                    left: [styles.avatar, avatarProps.imageStyle, extraStyle],
-                }}
-            />
-        );
-    }
-
     render() {
         const marginBottom = isSameUser(
             this.props.currentMessage,
@@ -74,7 +54,6 @@ export default class Message extends React.Component {
                         this.props.containerStyle,
                     ]}
                 >
-                    {this.renderAvatar()}
                     {this.renderBubble()}
                 </View>
             </View>
@@ -87,12 +66,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "flex-end",
         justifyContent: "flex-start",
-        marginLeft: 8,
-        marginRight: 0,
-    },
-    avatar: {
-        height: 40,
-        width: 40,
-        borderRadius: 3,
+        marginHorizontal: 16,
+        marginVertical: 8,
+        borderRadius: 12,
+        padding: 12,
+        backgroundColor: "#FFF",
     },
 });
