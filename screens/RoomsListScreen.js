@@ -2,9 +2,9 @@ import React from "react";
 import AppLoading from "expo-app-loading";
 
 import { View, Text, StyleSheet } from "react-native";
-import { Header, Image } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
+import ScreenHeader from "./components/Header/ScreenHeader";
 import RoomCard from "./components/RoomsList/RoomCard";
 
 import {
@@ -29,8 +29,8 @@ const GET_ROOMS_DATA = gql`
     }
 `;
 
-const searchIcon = require("../assets/search.svg");
-const roomsIcon = require("../assets/rooms.svg");
+const searchIcon = "../assets/search.svg";
+const roomsIcon = "../assets/rooms.svg";
 
 export default function RoomsListScreen({ navigation }) {
     const { loading, error, data } = useQuery(GET_ROOMS_DATA);
@@ -52,18 +52,10 @@ export default function RoomsListScreen({ navigation }) {
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Header
-                statusBarProps={{ barStyle: "light-content" }}
-                placement="left"
-                centerComponent={{ text: "Rooms", style: styles.headerTitle }}
-                containerStyle={styles.headerContainer}
-                rightComponent={
-                    <View style={styles.options}>
-                        <Image source={searchIcon} style={styles.optionIcon} />
-                        <Image source={roomsIcon} style={styles.optionIcon} />
-                    </View>
-                }
-                rightContainerStyle={styles.options}
+            <ScreenHeader
+                title="Rooms"
+                secondIcon={{ uri: searchIcon }}
+                firstIcon={{ uri: roomsIcon }}
             />
             <View style={styles.roomsList}>
                 {rooms.map((room) => {
@@ -71,6 +63,7 @@ export default function RoomsListScreen({ navigation }) {
 
                     return (
                         <RoomCard
+                            key={id}
                             id={id}
                             name={name}
                             roomPic={roomPic}
@@ -90,36 +83,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         minHeight: "100%",
     },
-    headerContainer: {
-        backgroundColor: "#B6DEFD",
-        justifyContent: "space-between",
-        borderBottomLeftRadius: 24,
-        borderBottomRightRadius: 24,
-    },
-    headerTitle: {
-        color: "#5603AD",
-        fontFamily: "Poppins_700Bold",
-        fontSize: 36,
-        lineHeight: 54,
-        textAlign: "left",
-        flex: 1,
-    },
-
-    options: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-around",
-        flex: 1.5,
-    },
-
-    optionIcon: {
-        width: 44,
-        height: 44,
-        borderRadius: 50,
-        backgroundColor: "#fff",
-    },
-
     roomsList: {
         marginTop: 20,
         paddingHorizontal: 0,

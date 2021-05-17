@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import AppLoading from "expo-app-loading";
-import { Platform, StyleSheet, View, Text } from "react-native";
+import { Platform } from "react-native";
 
 import { GiftedChat } from "react-native-gifted-chat";
 import emojiUtils from "emoji-utils";
 
 import { gql, useMutation } from "@apollo/client";
 
-import { Header, Image } from "react-native-elements";
-
+import ScreenHeader from "./components/Header/ScreenHeader";
 import Message from "./components/ChatRoom/Message";
 
 import {
@@ -33,8 +32,8 @@ const POST_NEW_MESSAGE = gql`
     }
 `;
 
-const videoIcon = require("../assets/videocall.svg");
-const phoneIcon = require("../assets/phone.svg");
+const videoIcon = "../assets/videocall.svg";
+const phoneIcon = "../assets/phone.svg";
 
 export default function ChatRoomScreen({ navigation, route }) {
     let [fontsLoaded] = useFonts({
@@ -112,32 +111,12 @@ export default function ChatRoomScreen({ navigation, route }) {
 
     return (
         <>
-            <Header
-                statusBarProps={{ barStyle: "light-content" }}
-                placement="left"
-                leftComponent={
-                    <Image
-                        source={{ uri: route.params.chatData.room.roomPic }}
-                        style={styles.optionIcon}
-                    />
-                }
-                leftContainerStyle={styles.optionIcon}
-                centerComponent={
-                    <View>
-                        <Text style={styles.headerTitle}>
-                            {route.params.chatData.room.name}
-                        </Text>
-                        <Text style={styles.headerSubtitle}>Active now</Text>
-                    </View>
-                }
-                containerStyle={styles.headerContainer}
-                rightComponent={
-                    <View style={styles.options}>
-                        <Image source={phoneIcon} style={styles.optionIcon} />
-                        <Image source={videoIcon} style={styles.optionIcon} />
-                    </View>
-                }
-                rightContainerStyle={styles.options}
+            <ScreenHeader
+                title={route.params.chatData.room.name}
+                subtitle="Active now"
+                leftIcon={{ uri: route.params.chatData.room.roomPic }}
+                firstIcon={{ uri: phoneIcon }}
+                secondIcon={{ uri: videoIcon }}
             />
             <GiftedChat
                 messages={messages}
@@ -150,41 +129,3 @@ export default function ChatRoomScreen({ navigation, route }) {
         </>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#E5E5E5",
-    },
-    headerContainer: {
-        backgroundColor: "#B6DEFD",
-        justifyContent: "center",
-        borderBottomLeftRadius: 24,
-        borderBottomRightRadius: 24,
-    },
-    headerTitle: {
-        color: "#5603AD",
-        fontFamily: "Poppins_600SemiBold",
-        fontSize: 16,
-        lineHeight: 24,
-        textAlign: "left",
-        flex: 1,
-    },
-    headerSubtitle: {
-        fontFamily: "Poppins_400Regular",
-        fontSize: 14,
-        lineHeight: 18,
-    },
-    options: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-around",
-        flex: 1.5,
-    },
-    optionIcon: {
-        width: 44,
-        height: 44,
-        borderRadius: 50,
-        backgroundColor: "#fff",
-    },
-});
