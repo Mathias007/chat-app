@@ -13,9 +13,11 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { LOGIN_USER } from "../graphql/loginUser.mutation";
 import { useMutation } from "@apollo/client";
 
+import { USER_MAIL, USER_PASS } from "@env";
+
 export default function LoginScreen({ navigation }) {
-    const [email, onChangeEmail] = useState("howard@mail.com");
-    const [password, onChangePassword] = useState("NBC872$$%mvnM");
+    const [email, onChangeEmail] = useState(USER_MAIL);
+    const [password, onChangePassword] = useState(USER_PASS);
     const [error, setError] = useState(null);
 
     const [loginUser, { data }] = useMutation(LOGIN_USER);
