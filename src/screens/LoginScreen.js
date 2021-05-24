@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from "react";
-import AppLoading from "expo-app-loading";
+import React, { useState } from "react";
 
-import { View, Text, StyleSheet } from "react-native";
-import { Input, Button } from "react-native-elements";
+import { View, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import Icon from "react-native-vector-icons/FontAwesome";
+import FormHeading from "./components/Form/FormHeading";
+import FormField from "./components/Form/FormField";
+import FormError from "./components/Form/FormError";
+import FormButton from "./components/Form/FormButton";
 
-import {
-    useFonts,
-    Poppins_400Regular,
-    Poppins_500Medium,
-    Poppins_600SemiBold,
-    Poppins_700Bold,
-} from "@expo-google-fonts/poppins";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 import { LOGIN_USER } from "../graphql/loginUser.mutation";
 import { useMutation } from "@apollo/client";
@@ -26,75 +21,48 @@ export default function LoginScreen({ navigation }) {
     const [loginUser, { data }] = useMutation(LOGIN_USER);
 
     function onLoginFormSubmit() {
-        if ((email, password)) {
-            loginUser({
-                variables: {
-                    email,
-                    password,
-                },
+        loginUser({
+            variables: {
+                email,
+                password,
+            },
+        })
+            .then((res) => {
+                console.log(res);
+                navigation.navigate("Rooms");
             })
-                .then((res) => {
-                    console.log(res);
-                    navigation.navigate("Rooms");
-                })
-                .catch((err) => {
-                    setError(
-                        "Sorry, email or password aren't correct. Try again!"
-                    );
-                });
-        }
-    }
-
-    let [fontsLoadeed] = useFonts({
-        Poppins_400Regular,
-        Poppins_500Medium,
-        Poppins_600SemiBold,
-        Poppins_700Bold,
-    });
-
-    if (!fontsLoadeed) {
-        return <AppLoading />;
+            .catch((err) => {
+                setError("Sorry, email or password aren't correct. Try again!");
+            });
     }
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.header}>Welcome Back</Text>
-            <Text style={styles.subheader}>
-                Log in and stay in touch with everyone!
-            </Text>
+            <FormHeading
+                titleText="Welcome Back"
+                subitleText="Log in and stay in touch with everyone!"
+            />
 
             <View>
-                <Input
+                <FormField
+                    label="e-mail address"
                     value={email}
                     onChangeText={onChangeEmail}
                     textContentType="emailAddress"
-                    label="e-mail address"
-                    inputContainerStyle={styles.inputContainer}
-                    inputStyle={styles.input}
-                    labelStyle={styles.label}
                 />
-                <Input
+
+                <FormField
                     label="password"
                     value={password}
                     secureTextEntry={true}
                     onChangeText={onChangePassword}
                     textContentType="password"
-                    inputContainerStyle={styles.inputContainer}
-                    inputStyle={styles.input}
-                    labelStyle={styles.label}
                     rightIcon={<Icon name="eye-slash" />}
-                    rightIconContainerStyle={{
-                        position: "absolute",
-                        right: 10,
-                        color: "#BFC1CC",
-                    }}
                 />
-                <Text style={styles.error}>{error}</Text>
-                <Button
-                    title="Log in"
-                    onPress={onLoginFormSubmit}
-                    buttonStyle={styles.button}
-                />
+
+                <FormError error={error} />
+
+                <FormButton title="Log in" onPress={onLoginFormSubmit} />
             </View>
         </ScrollView>
     );
@@ -107,63 +75,5 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "space-around",
         height: "100%",
-    },
-    header: {
-        color: "#5603AD",
-        fontFamily: "Poppins_700Bold",
-        fontSize: 36,
-        lineHeight: 54,
-    },
-    subheader: {
-        paddingRight: 40,
-        fontFamily: "Poppins_700Bold",
-        fontSize: 22,
-        lineHeight: 33,
-        color: "#fff",
-    },
-    inputContainer: {
-        display: "flex",
-        alignItems: "center",
-        borderBottomColor: "transparent",
-    },
-    input: {
-        position: "relative",
-        marginVertical: 4,
-        marginHorizontal: 0,
-        paddingVertical: 8,
-        paddingHorizontal: 16,
-        borderWidth: 0,
-        borderRadius: 10,
-        fontSize: 16,
-        fontFamily: "Poppins_400Regular",
-        backgroundColor: "#FFF",
-    },
-    inputRightIcon: {
-        position: "absolute",
-        right: 10,
-        color: "#BFC1CC",
-    },
-    label: {
-        color: "#F0F8FF",
-        fontFamily: "Poppins_500Medium",
-        fontSize: 16,
-        lineHeight: 24,
-    },
-    button: {
-        marginVertical: 20,
-        marginHorizontal: 32,
-        paddingVertical: 17,
-        paddingHorizontal: 88,
-        borderRadius: 10,
-        color: "#FFF",
-        fontSize: 19,
-        lineHeight: 28.5,
-        fontFamily: "Poppins_600SemiBold",
-        backgroundColor: "#5603AD",
-    },
-    error: {
-        textAlign: "center",
-        color: "#F0F8FF",
-        fontFamily: "Poppins_500Medium",
     },
 });
