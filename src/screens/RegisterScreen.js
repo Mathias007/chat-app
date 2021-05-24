@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppLoading from "expo-app-loading";
 
 import { View, Text, StyleSheet } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
+
+import { useMutation } from "@apollo/client";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -15,12 +17,46 @@ import {
     Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 
+import { REGISTER_USER } from "../graphql/registerUser.mutation";
+
 export default function RegisterScreen({ navigation }) {
     const [email, onChangeEmail] = useState(null);
     const [firstName, onChangeFirstName] = useState(null);
     const [lastName, onChangeLastName] = useState(null);
     const [password, onChangePassword] = useState(null);
-    const [passwordConfirm, onChangePasswordConfirm] = useState(null);
+    const [passwordConfirmation, onChangePasswordConfirm] = useState(null);
+
+    const [registerUser, { data }] = useMutation(REGISTER_USER);
+
+    function onRegisterFormSubmit() {
+        console.log(email, firstName, lastName, password, passwordConfirmation);
+
+        if (
+            email &&
+            firstName &&
+            lastName &&
+            password &&
+            passwordConfirmation &&
+            password === passwordConfirmation
+        ) {
+            registerUser({
+                variables: {
+                    email,
+                    firstName,
+                    lastName,
+                    password,
+                    passwordConfirmation,
+                },
+            })
+                .then((res) => {
+                    console.log(res);
+                    navigation.navigate("Login");
+                })
+                .catch((err) => {
+                    setError("Uncorrect data. Registration wasn't possible.");
+                });
+        }
+    }
 
     let [fontsLoaded] = useFonts({
         Poppins_400Regular,
@@ -82,8 +118,8 @@ export default function RegisterScreen({ navigation }) {
                 />
                 <Input
                     label="password confirmation"
-                    value={passwordConfirm}
-                    secureTextEntry={false}
+                    value={passwordConfirmation}
+                    secureTextEntry={true}
                     onChangeText={onChangePasswordConfirm}
                     textContentType="password"
                     inputContainerStyle={styles.inputContainer}
@@ -92,9 +128,10 @@ export default function RegisterScreen({ navigation }) {
                     rightIcon={<Icon name="eye-slash" />}
                     rightIconContainerStyle={styles.inputRightIcon}
                 />
+                <Text style={styles.error}>{error}</Text>
                 <Button
                     title="Register"
-                    onPress={() => navigation.navigate("Chat")}
+                    onPress={onRegisterFormSubmit}
                     buttonStyle={styles.button}
                 />
                 <Text style={styles.privacy}>
@@ -165,5 +202,10 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "#FFF",
         marginBottom: 32,
+    },
+    error: {
+        textAlign: "center",
+        color: "#F0F8FF",
+        fontFamily: "Poppins_500Medium",
     },
 });
