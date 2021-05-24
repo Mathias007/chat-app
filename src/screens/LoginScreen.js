@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppLoading from "expo-app-loading";
 
 import { View, Text, StyleSheet } from "react-native";
@@ -15,9 +15,35 @@ import {
     Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 
+import { LOGIN_USER } from "../graphql/loginUser.mutation";
+import { useMutation } from "@apollo/client";
+
 export default function LoginScreen({ navigation }) {
-    const [email, onChangeEmail] = useState(null);
-    const [password, onChangePassword] = useState(null);
+    const [email, onChangeEmail] = useState("howard@mail.com");
+    const [password, onChangePassword] = useState("NBC872$$%mvnM");
+    const [error, setError] = useState(null);
+
+    const [loginUser, { data }] = useMutation(LOGIN_USER);
+
+    function onLoginFormSubmit() {
+        if ((email, password)) {
+            loginUser({
+                variables: {
+                    email,
+                    password,
+                },
+            })
+                .then((res) => {
+                    console.log(res);
+                    navigation.navigate("Rooms");
+                })
+                .catch((err) => {
+                    setError(
+                        "Sorry, email or password aren't correct. Try again!"
+                    );
+                });
+        }
+    }
 
     let [fontsLoadeed] = useFonts({
         Poppins_400Regular,
@@ -25,11 +51,6 @@ export default function LoginScreen({ navigation }) {
         Poppins_600SemiBold,
         Poppins_700Bold,
     });
-
-    const handleFormSubmit = () => {
-        if (email === null && password === null)
-            navigation.navigate("Rooms");
-    };
 
     if (!fontsLoadeed) {
         return <AppLoading />;
@@ -68,10 +89,10 @@ export default function LoginScreen({ navigation }) {
                         color: "#BFC1CC",
                     }}
                 />
-
+                <Text style={styles.error}>{error}</Text>
                 <Button
                     title="Log in"
-                    onPress={handleFormSubmit}
+                    onPress={onLoginFormSubmit}
                     buttonStyle={styles.button}
                 />
             </View>
@@ -139,5 +160,10 @@ const styles = StyleSheet.create({
         lineHeight: 28.5,
         fontFamily: "Poppins_600SemiBold",
         backgroundColor: "#5603AD",
+    },
+    error: {
+        textAlign: "center",
+        color: "#F0F8FF",
+        fontFamily: "Poppins_500Medium",
     },
 });
