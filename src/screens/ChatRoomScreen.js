@@ -38,7 +38,7 @@ export default function ChatRoomScreen({ navigation, route }) {
     const [sendMessage, { data }] = useMutation(POST_NEW_MESSAGE);
 
     function onSend(newMessages = []) {
-        setMessages(GiftedChat.append(messages, newMessages));
+        setMessages(GiftedChat.append(newMessages, messages));
 
         newMessages.forEach((message) => {
             const { _id, text, createdAt, user } = message;
@@ -86,6 +86,7 @@ export default function ChatRoomScreen({ navigation, route }) {
                 secondSettingsIcon="video"
             />
             <GiftedChat
+                inverted={false}
                 messages={messages}
                 onSend={(messages) => onSend(messages)}
                 user={{
