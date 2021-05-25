@@ -9,32 +9,36 @@ import LoginScreen from "./src/screens/LoginScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
 import RoomsListScreen from "./src/screens/RoomsListScreen";
 
+import { screens } from "./src/config/screens";
+
+const { LOGIN, REGISTER, ROOMS, CHAT } = screens;
+
 const Stack = createStackNavigator();
 const { Navigator, Screen } = Stack;
 
 export default function App() {
     return (
         <NavigationContainer>
-            <Navigator initialRouteName="Login">
+            <Navigator initialRouteName={ROOMS}>
                 <Screen
-                    name="Login"
+                    name={LOGIN}
                     component={LoginScreen}
-                    options={{ title: "Login" }}
+                    options={{ title: LOGIN }}
                 />
                 <Screen
-                    name="Register"
+                    name={REGISTER}
                     component={RegisterScreen}
-                    options={{ title: "Register" }}
+                    options={{ title: REGISTER }}
                 />
                 <Screen
-                    name="Rooms"
+                    name={ROOMS}
                     component={RoomsListScreen}
-                    options={{ title: "Rooms" }}
+                    options={{ title: ROOMS }}
                 />
                 <Screen
-                    name="Chat"
+                    name={CHAT}
                     component={ChatRoomScreen}
-                    options={{ title: "Chat" }}
+                    options={{ title: CHAT }}
                 />
             </Navigator>
             <StatusBar style="auto" />
