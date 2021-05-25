@@ -2,11 +2,23 @@ import React from "react";
 import AppLoading from "expo-app-loading";
 import { Text, StyleSheet } from "react-native";
 
-import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
+import Link from "../Link";
+
+import {
+    useFonts,
+    Poppins_400Regular,
+    Poppins_700Bold,
+} from "@expo-google-fonts/poppins";
+
+import {
+    privacyPolicyLink,
+    termsAndConditionsLink,
+} from "../../../config/links";
 
 export default function FormFooter() {
     let [fontsLoaded] = useFonts({
         Poppins_400Regular,
+        Poppins_700Bold,
     });
 
     if (!fontsLoaded) {
@@ -15,8 +27,9 @@ export default function FormFooter() {
 
     return (
         <Text style={styles.privacy}>
-            By clicking sign up button you agree with the terms and conditions
-            and the privacy policy.
+            By clicking sign up button you agree with the
+            <Link url={termsAndConditionsLink} text=" terms and conditions " />
+            and <Link url={privacyPolicyLink} text=" the privacy policy" />.
         </Text>
     );
 }
