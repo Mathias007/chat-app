@@ -15,10 +15,15 @@ import { useMutation } from "@apollo/client";
 
 import { USER_MAIL, USER_PASS } from "@env";
 
-export default function LoginScreen({ navigation }) {
+import { screens } from "../config/screens";
+
+const { ROOMS } = screens;
+
+export default function LoginScreen() {
     const [email, onChangeEmail] = useState(USER_MAIL);
     const [password, onChangePassword] = useState(USER_PASS);
     const [error, setError] = useState(null);
+    const [isSecret, setSecret] = useState(true);
 
     const [loginUser, { data }] = useMutation(LOGIN_USER);
 
@@ -31,11 +36,15 @@ export default function LoginScreen({ navigation }) {
         })
             .then((res) => {
                 console.log(res);
-                navigation.navigate("Rooms");
+                navigation.navigate(ROOMS);
             })
             .catch((err) => {
                 setError("Sorry, email or password aren't correct. Try again!");
             });
+    }
+
+    function handlePasswordVisibility() {
+        setSecret(!isSecret);
     }
 
     return (
@@ -56,10 +65,15 @@ export default function LoginScreen({ navigation }) {
                 <FormField
                     label="password"
                     value={password}
-                    secureTextEntry={true}
+                    secureTextEntry={isSecret}
                     onChangeText={onChangePassword}
                     textContentType="password"
-                    rightIcon={<Icon name="eye-slash" />}
+                    rightIcon={
+                        <Icon
+                            name={isSecret ? "eye-slash" : "eye"}
+                            onPress={handlePasswordVisibility}
+                        />
+                    }
                 />
 
                 <FormError error={error} />
