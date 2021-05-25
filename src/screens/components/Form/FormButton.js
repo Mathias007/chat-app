@@ -22,9 +22,9 @@ export default function FormButton({ title, onPress }) {
 
 const styles = StyleSheet.create({
     button: {
-        marginVertical: 20,
+        marginBottom: 20,
         marginHorizontal: 32,
-        paddingVertical: 17,
+        paddingVertical: 16,
         paddingHorizontal: 88,
         borderRadius: 10,
         color: "#FFF",

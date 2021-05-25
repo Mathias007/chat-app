@@ -51,9 +51,7 @@ const styles = StyleSheet.create({
     },
     input: {
         position: "relative",
-        marginVertical: 4,
         marginHorizontal: 0,
-        paddingVertical: 8,
         paddingHorizontal: 16,
         borderWidth: 0,
         borderRadius: 10,
@@ -72,6 +70,7 @@ const styles = StyleSheet.create({
         color: "#BFC1CC",
     },
     label: {
+        paddingBottom: 4,
         color: "#F0F8FF",
         fontFamily: "Poppins_500Medium",
         fontSize: 16,

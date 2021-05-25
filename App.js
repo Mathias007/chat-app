@@ -19,26 +19,26 @@ const { Navigator, Screen } = Stack;
 export default function App() {
     return (
         <NavigationContainer>
-            <Navigator initialRouteName={ROOMS}>
+            <Navigator initialRouteName={LOGIN}>
                 <Screen
                     name={LOGIN}
                     component={LoginScreen}
-                    options={{ title: LOGIN }}
+                    options={{ title: LOGIN, headerShown: false }}
                 />
                 <Screen
                     name={REGISTER}
                     component={RegisterScreen}
-                    options={{ title: REGISTER }}
+                    options={{ title: REGISTER, headerShown: false }}
                 />
                 <Screen
                     name={ROOMS}
                     component={RoomsListScreen}
-                    options={{ title: ROOMS }}
+                    options={{ title: ROOMS, headerShown: false }}
                 />
                 <Screen
                     name={CHAT}
                     component={ChatRoomScreen}
-                    options={{ title: CHAT }}
+                    options={{ title: CHAT, headerShown: false }}
                 />
             </Navigator>
             <StatusBar style="auto" />

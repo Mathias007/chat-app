@@ -51,17 +51,17 @@ export default function RoomsListScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#F0F8FF",
         display: "flex",
         alignItems: "center",
         minHeight: "100%",
+        backgroundColor: "#F0F8FF",
     },
     roomsList: {
-        marginTop: 20,
-        paddingHorizontal: 0,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
         alignItems: "center",
+        marginTop: 20,
+        paddingHorizontal: 0,
     },
 });

@@ -35,10 +35,11 @@ export default function ScreenHeader({
 
 const styles = StyleSheet.create({
     headerContainer: {
-        backgroundColor: "#B6DEFD",
         justifyContent: "space-between",
         alignItems: "center",
+        paddingTop: 36, 
         borderBottomLeftRadius: 24,
         borderBottomRightRadius: 24,
+        backgroundColor: "#B6DEFD",
     },
 });

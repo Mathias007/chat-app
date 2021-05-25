@@ -32,7 +32,7 @@ export default function RegisterScreen({ navigation }) {
 
     const [registerUser, { data }] = useMutation(REGISTER_USER);
 
-    function onRegisterFormSubmit() {
+    function onRegisterFormSubmit({ navigation }) {
         registerUser({
             variables: {
                 email,
@@ -114,7 +114,7 @@ export default function RegisterScreen({ navigation }) {
                 />
 
                 <FormError error={error} />
-                <FormButton title="Register" onPress={onRegisterFormSubmit} />
+                <FormButton title="Sign up" onPress={onRegisterFormSubmit} />
 
                 <FormFooter />
             </View>
@@ -124,9 +124,10 @@ export default function RegisterScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
-        backgroundColor: "#B6DEFD",
         display: "flex",
         justifyContent: "space-around",
+        padding: 20,
+        paddingTop: 50,
+        backgroundColor: "#B6DEFD",
     },
 });

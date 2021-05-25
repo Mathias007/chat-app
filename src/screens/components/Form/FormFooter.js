@@ -36,11 +36,11 @@ export default function FormFooter() {
 
 const styles = StyleSheet.create({
     privacy: {
+        marginBottom: 32,
         fontFamily: "Poppins_400Regular",
         fontSize: 12,
         lineHeight: 16,
         textAlign: "center",
         color: "#FFF",
-        marginBottom: 32,
     },
 });

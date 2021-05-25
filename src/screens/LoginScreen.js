@@ -19,7 +19,7 @@ import { screens } from "../config/screens";
 
 const { ROOMS } = screens;
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
     const [email, onChangeEmail] = useState(USER_MAIL);
     const [password, onChangePassword] = useState(USER_PASS);
     const [error, setError] = useState(null);
@@ -86,10 +86,10 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
-        backgroundColor: "#B6DEFD",
         display: "flex",
         justifyContent: "space-around",
         height: "100%",
+        padding: 10,
+        backgroundColor: "#B6DEFD",
     },
 });
