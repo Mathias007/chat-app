@@ -15,6 +15,10 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 import { REGISTER_USER } from "../graphql/registerUser.mutation";
 
+import { screens } from "../config/screens";
+
+const { LOGIN } = screens;
+
 export default function RegisterScreen({ navigation }) {
     const [email, onChangeEmail] = useState(null);
     const [firstName, onChangeFirstName] = useState(null);
@@ -22,6 +26,9 @@ export default function RegisterScreen({ navigation }) {
     const [password, onChangePassword] = useState(null);
     const [passwordConfirmation, onChangePasswordConfirm] = useState(null);
     const [error, setError] = useState(null);
+
+    const [isSecret, setSecret] = useState(true);
+    const [isConfirmSecret, setConfirmSecret] = useState(true);
 
     const [registerUser, { data }] = useMutation(REGISTER_USER);
 
@@ -37,11 +44,19 @@ export default function RegisterScreen({ navigation }) {
         })
             .then((res) => {
                 console.log(res);
-                navigation.navigate("Login");
+                navigation.navigate(LOGIN);
             })
             .catch((err) => {
                 setError("Uncorrect data. Registration wasn't possible.");
             });
+    }
+
+    function handlePasswordVisibility() {
+        setSecret(!isSecret);
+    }
+
+    function handlePasswordConfirmVisibility() {
+        setConfirmSecret(!isConfirmSecret);
     }
 
     return (
@@ -73,19 +88,29 @@ export default function RegisterScreen({ navigation }) {
                 <FormField
                     label="password"
                     value={password}
-                    secureTextEntry={true}
+                    secureTextEntry={isSecret}
                     onChangeText={onChangePassword}
                     textContentType="password"
-                    rightIcon={<Icon name="eye-slash" />}
+                    rightIcon={
+                        <Icon
+                            name={isSecret ? "eye-slash" : "eye"}
+                            onPress={handlePasswordVisibility}
+                        />
+                    }
                 />
 
                 <FormField
                     label="password confirmation"
                     value={passwordConfirmation}
-                    secureTextEntry={true}
+                    secureTextEntry={isConfirmSecret}
                     onChangeText={onChangePasswordConfirm}
                     textContentType="password"
-                    rightIcon={<Icon name="eye-slash" />}
+                    rightIcon={
+                        <Icon
+                            name={isConfirmSecret ? "eye-slash" : "eye"}
+                            onPress={handlePasswordConfirmVisibility}
+                        />
+                    }
                 />
 
                 <FormError error={error} />
